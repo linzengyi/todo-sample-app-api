@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  # PostgreSQL 資料庫服務
+  postgresql_db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecretpassword123
+      POSTGRES_DB: demo
+    volumes:
+      - ./database/data:/var/lib/postgresql/data
+    networks:
+      - my_network  # 將此服務連接 my_network 的網路
+    ports:
+      - "5432:5432"  # 對外開放 5432 端口
+  # Node.js 應用程式服務
+  nodejs_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/usr/src/app
+    networks:
+      - my_network  # 將此服務連接 my_network 的網路
+    ports:
+      - "3000:3000"  # 對外開放 3000 端口
+    depends_on:
+      - postgresql_db
+networks:
+  my_network:  # 定義 my_network 的網路
