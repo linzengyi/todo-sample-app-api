@@ -3,6 +3,8 @@
 
 ## 專案運行說明
 1.於專案根目錄下新增.env檔，新增以下參數:
+
+注：設定 DATABASE_USER、DATABASE_PASSWORD、DATABASE_NAME 需調整docker-compose檔案postgresql_db服務環境變數。
 ````
     #server
     PORT=<自訂PORT號>
